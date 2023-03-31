@@ -32,6 +32,19 @@ Open up your favorite browser and navigate to http://localhost:5173/ and you sho
    ---->ProductDetailsCard
 ```
 
+## Functionality
+
+1. Search function .
+2. Should be able to add items and get to Checkout
+3. Offers: User should be able to apply the following offers and see the items that were added with offers
+
+- Buy 6 cans of Coca-Cola, and get one free
+- Buy 3 croissants and get a free coffee (need to show the additional item being added)
+
+4. We’re able to navigate back and forth between the 2 pages with retain the cart information
+5. We’re able to add or remove items smoothly with offers taking effect when applicable and getting removed similarly if not meeting the criteria anymore
+6. The subtotal, discount and totals are calculated correctly Pages should be responsive
+
 ## Challenges
 
 1. Implementing Search Functionality
