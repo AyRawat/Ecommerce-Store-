@@ -32,7 +32,7 @@ Open up your favorite browser and navigate to http://localhost:5173/ and you sho
    ---->ProductDetailsCard
 ```
 
-##Challenges
+## Challenges
 
 1. Implementing Search Functionality
    Since, the API provided, did not have any route for searching a particular item. It was difficult to implement search functionality.
