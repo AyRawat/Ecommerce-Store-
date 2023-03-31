@@ -18,7 +18,6 @@ const MyNavbar = () => {
   const handleSearch = (e) => {
     const searcher = new FuzzySearch(items, ["name"], { caseSensitive: false });
     let data = searcher.search(e.target.value);
-    console.log(data);
     searchItems(data);
   };
 

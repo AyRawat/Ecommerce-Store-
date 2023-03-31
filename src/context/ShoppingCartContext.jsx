@@ -10,7 +10,6 @@ export function ShoppingCartProvider({ children }) {
   const [wishListItems, setWishListItems] = useState([]);
 
   const searchItems = (data) => {
-    console.log("Reached inside Search", data);
     setSearchResults(data);
   };
   //Cart Items
@@ -19,7 +18,6 @@ export function ShoppingCartProvider({ children }) {
     return cartItems.length;
   };
   const addToCart = (id) => {
-    console.log("This was called for this item ID: ", id);
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
         return [...currItems, { id, quantity: 1 }];
@@ -33,7 +31,6 @@ export function ShoppingCartProvider({ children }) {
         });
       }
     });
-    console.log("The CartItems", cartItems);
   };
   function increaseProductQuantity(id) {
     setCartItems((currItems) => {
@@ -43,7 +40,6 @@ export function ShoppingCartProvider({ children }) {
         return currItems.map((item) => {
           if (item.id === id) {
             if (id === 642 && item.quantity === 5) {
-              console.log("Reached here INSIDE COCA COALA");
               return { ...item, quantity: item.quantity + 2 };
             }
             return { ...item, quantity: item.quantity + 1 };
@@ -53,7 +49,6 @@ export function ShoppingCartProvider({ children }) {
         });
       }
     });
-    console.log("The CartItems", cartItems);
   }
   function decreaseProductQuantity(id) {
     setCartItems((currItems) => {
@@ -69,7 +64,6 @@ export function ShoppingCartProvider({ children }) {
         });
       }
     });
-    console.log("The CartItems", cartItems);
   }
   const removeFromCart = (itemId) => {
     setCartItems((currItems) => {
@@ -84,7 +78,6 @@ export function ShoppingCartProvider({ children }) {
   function handleDiscount(flag) {
     let id = "641";
     if (flag) {
-      console.log("REACHED here inside Handle Discount");
       increaseProductQuantity(id);
     } else {
       decreaseProductQuantity(id);
@@ -105,7 +98,6 @@ export function ShoppingCartProvider({ children }) {
       }
     });
     return totalDiscount;
-    console.log();
   }
 
   //FinalPriceCalculator
@@ -115,16 +107,13 @@ export function ShoppingCartProvider({ children }) {
     return wishListItems.length;
   };
   const updateWishList = (id) => {
-    console.log("This was called for this item ID: ", id);
     setWishListItems((wishListItems) => {
       if (wishListItems.find((item) => item.id === id) == null) {
-        console.log("Id Not found");
         return [...wishListItems, { id }];
       } else {
         return wishListItems.filter((item) => item.id != id);
       }
     });
-    console.log("The WishList Items", wishListItems);
   };
 
   const contextValue = {

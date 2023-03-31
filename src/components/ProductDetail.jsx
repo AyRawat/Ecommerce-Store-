@@ -15,9 +15,7 @@ function ProductDetails(props) {
     const obj = cartItems.find((item) => item.id === id);
     return obj ? obj.quantity : null;
   };
-  useEffect(() => {
-    console.log("These are the cart Items", props);
-  }, [cartItems]);
+  useEffect(() => {}, [cartItems]);
   return (
     <Container className="d-flex flex-column justify-content-between productCardShadow">
       <Row id={props.id}>
