@@ -5,37 +5,21 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import ProductDetails from "../components/ProductDetail";
 import storeItems from "../data/items.json";
 import fetchData from "../utilities/fetchData";
+import subTotalCalculator from "../utilities/subTotalCalculator";
+import totalPriceCalculator from "../utilities/totalPriceCalculator";
+
 import "./pages.css";
 
 export default function Checkout() {
   const [data, setData] = useState([]);
-  const { getAllCartItems, removeFromCart, getCartItemsId } = useShoppingCart();
+  const { cartItems, discountPriceCalculator } = useShoppingCart();
   let key = "all";
   useEffect(() => {
     async function fetchED() {
-      console.log("Getting All cart Items", getAllCartItems());
-      let getAllItems = getAllCartItems();
-      console.log("GET ALL ITEMS", getAllItems);
       let response = await fetchData(key);
-      const map = new Map();
-      for (const item of getAllItems) {
-        map.set(item.id, item.quantity);
-      }
-      console.log(map);
-      let itemList = [];
-      for (let res of response) {
-        if (map.has(res.id)) {
-          itemList.push({
-            ...res,
-            quantity: map.get(res.id),
-          });
-        }
-      }
-      console.log("THe item list that you have created", itemList);
-      setData(itemList);
+      setData(response);
     }
     fetchED();
-    //setData(response);
   }, []);
 
   return (
@@ -44,51 +28,59 @@ export default function Checkout() {
         <h3>Checkout</h3>
       </Row>
       <Row>
-        {data.map((item) => (
-          <Row key={item.id} lg={1} md={1} sm={1}>
-            <Col>
-              <ProductDetails
-                id={item?.id}
-                name={item?.name}
-                img={item?.img}
-                price={item?.price}
-                quantity={item?.quantity}
-              />
-            </Col>
-          </Row>
-        ))}
+        {data.map((item) => {
+          if (cartItems.find((cart) => cart.id === item.id)) {
+            return (
+              <Row key={item.id} lg={1} md={1} sm={1}>
+                <Col>
+                  <ProductDetails
+                    id={item?.id}
+                    name={item?.name}
+                    img={item?.img}
+                    price={item?.price}
+                  />
+                </Col>
+              </Row>
+            );
+          }
+        })}
       </Row>
-      <Row>
+      <Row className="d-flex">
         <hr />
-        <Row className="d-flex justify-content-center">
-          <Col>
+        <Row className="align-right">
+          <Col className="col-lg-6 text-center">
             <h5>Subtotal</h5>
           </Col>
           <Col>
-            <p>Subtotal</p>
+            <p>{"£" + subTotalCalculator(data, cartItems)}</p>
           </Col>
         </Row>
         <hr />
         <Row className="d-flex justify-content-center">
-          <Col>
-            <h5>Subtotal</h5>
+          <Col className="col-lg-6 text-center">
+            <h5>Discount</h5>
           </Col>
           <Col>
-            <p>Subtotal</p>
+            <p>{"£" + discountPriceCalculator()}</p>
           </Col>
         </Row>
         <hr />
         <Row className="d-flex justify-content-center">
-          <Col className="col-lg-6">
-            <h5>Subtotal</h5>
+          <Col className="col-lg-6 text-center">
+            <h5>Total</h5>
           </Col>
           <Col className="col-lg-3">
-            <p>Subtotal</p>
+            <p>
+              {"£" +
+                totalPriceCalculator(
+                  data,
+                  discountPriceCalculator(),
+                  cartItems
+                )}
+            </p>
           </Col>
           <Col className="col=lg-3">
-            <Button className="greenBgColor" variant="none">
-              Checkout
-            </Button>
+            <button className="greenBgColor">Checkout</button>
           </Col>
         </Row>
         <hr />

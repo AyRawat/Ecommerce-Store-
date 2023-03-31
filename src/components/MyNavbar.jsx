@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Nav,
   Navbar,
@@ -8,10 +8,20 @@ import {
   Button,
 } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import FuzzySearch from "fuzzy-search";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import items from "../data/items.json";
 
 const MyNavbar = () => {
-  const { getCartQuantity, getWishListCount } = useShoppingCart();
+  const { getCartQuantity, searchItems, getWishListCount } = useShoppingCart();
+
+  const handleSearch = (e) => {
+    const searcher = new FuzzySearch(items, ["name"], { caseSensitive: false });
+    let data = searcher.search(e.target.value);
+    console.log(data);
+    searchItems(data);
+  };
+
   return (
     <Navbar sticky="top" bg="light" className="mb-3 mt-3 shadow-sm">
       <Container>
@@ -27,6 +37,7 @@ const MyNavbar = () => {
               placeholder="Search"
               className="mr-2 rounded-pill searchBoxShadow"
               aria-label="Search"
+              onChange={handleSearch}
             ></FormControl>
           </Form>
         </div>

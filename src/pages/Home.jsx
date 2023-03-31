@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import fetchData from "../utilities/fetchData";
+import { useShoppingCart } from "../context/ShoppingCartContext";
+import products from "../data/items.json";
 import "../App.css";
 
 // async function fetchData(key) {
@@ -14,7 +16,9 @@ import "../App.css";
 
 export default function Home() {
   const [data, setData] = useState([]);
+  const { searchResults } = useShoppingCart();
   let key = "all";
+
   useEffect(() => {
     async function fetchED() {
       let response = await fetchData(key);
@@ -30,7 +34,7 @@ export default function Home() {
   };
   return (
     <Container>
-      <Row md={4} xs={1} lg={3} className="g-3 mt-2 mb-4">
+      <Row md={1} lg={2} className="g-3 mt-2 mb-4">
         <Col className="col-md-8 col-lg-12 d-flex justify-content-start">
           <Button
             className="mx-4 rounded-pill shadow-lg text-muted"
@@ -65,9 +69,42 @@ export default function Home() {
       <Row>
         <h2>Trending Items</h2>
       </Row>
-      <Row md={4} xs={1} lg={5}>
+      {searchResults.length == 0 ? (
+        <Row className="d-flex">
+          {data.map((item) => (
+            <Col xs={12} md={6} sm={12} lg={6}>
+              <ProductCard
+                id={item.id}
+                type={item.type}
+                name={item.name}
+                description={item.description.substring(0, 25) + "....."}
+                img={item.img}
+                price={item.price}
+                quantity={item.available}
+              />
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <Row className="d-flex">
+          {searchResults.map((item) => (
+            <Col xs={12} md={6} sm={12} lg={6}>
+              <ProductCard
+                id={item.id}
+                type={item.type}
+                name={item.name}
+                description={item.description.substring(0, 25) + "....."}
+                img={item.img}
+                price={item.price}
+                quantity={item.available}
+              />
+            </Col>
+          ))}
+        </Row>
+      )}
+      {/* <Row className="d-flex">
         {data.map((item) => (
-          <Col md={4} xs={1} lg={5}>
+          <Col>
             <ProductCard
               id={item.id}
               type={item.type}
@@ -79,7 +116,7 @@ export default function Home() {
             />
           </Col>
         ))}
-      </Row>
+      </Row> */}
     </Container>
   );
 }

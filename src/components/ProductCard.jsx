@@ -1,72 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import Heart from "react-heart";
 import "./Components.css";
 
 function ProductCard(props) {
   const { addToCart, removeFromCart, updateWishList } = useShoppingCart();
+  const [active, setActive] = useState(false);
+
+  const handleClick = () => {
+    setIsLiked(!isLiked);
+  };
   return (
     <Card id={props.id} border="light" className="boxShadow mb-10">
       <Row>
         <Container>
-          <Row>
-            <Col xs={4} md={4} lg={4}>
+          <Row className="d-flex">
+            <Col xs={4} md={4} lg={4} className="justify-content-center">
               <Card.Img
-                variant="left"
+                className="d-block mx-auto ml-1 my-3 img-fluid rounded"
                 src={props.img}
                 height="100px"
               ></Card.Img>
             </Col>
-            <Col xs={8} md={8} lg={8}>
+            <Col xs={8} md={8} lg={8} className="justify-content-center">
               <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>{props.description}</Card.Text>
-                <Card.Text>Price: {props.price}</Card.Text>
-                <Card.Text>{props.quantity}</Card.Text>
-                <Button
-                  onClick={() => updateWishList(props.id)}
-                  variant="light"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-heart"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                  </svg>
 
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="red"
-                    className="bi bi-heart-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    />
-                  </svg>
-                </Button>
-                <Button onClick={() => addToCart(props.id)} variant="light">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-cart"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                  </svg>
-                </Button>
+                {props.quantity >= 10 ? (
+                  <span className="available-pill">Available</span>
+                ) : (
+                  <span className="unavailable-pill">
+                    Only {props.quantity} left
+                  </span>
+                )}
+                <Row>
+                  <Col md={{ offset: 1 }}>
+                    <Card.Text> {props.price}</Card.Text>
+                  </Col>
+                  <Col md={{ offset: 2 }}>
+                    <div onClick={() => addToCart(props.id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        className="bi bi-cart"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                      </svg>
+                    </div>
+                  </Col>
+                  <Col>
+                    <div style={{ width: "1.6rem" }}>
+                      <Heart
+                        isActive={active}
+                        onClick={() => {
+                          setActive(!active);
+                          updateWishList(props.id);
+                        }}
+                        animationScale={1.25}
+                        style={{ marginBottom: "1rem" }}
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </Card.Body>
             </Col>
-            <Row></Row>
           </Row>
         </Container>
       </Row>

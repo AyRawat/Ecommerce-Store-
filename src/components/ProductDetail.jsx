@@ -6,14 +6,18 @@ import priceCalculator from "../utilities/priceCaluclator";
 function ProductDetails(props) {
   const {
     cartItems,
-    getCartQuantity,
     increaseProductQuantity,
     decreaseProductQuantity,
-    updateCartItemCount,
+    removeFromCart,
   } = useShoppingCart();
+
+  const getIdQuantity = (id) => {
+    const obj = cartItems.find((item) => item.id === id);
+    return obj ? obj.quantity : null;
+  };
   useEffect(() => {
-    console.log(cartItems);
-  }, []);
+    console.log("These are the cart Items", props);
+  }, [cartItems]);
   return (
     <Container className="d-flex flex-column justify-content-between productCardShadow">
       <Row id={props.id}>
@@ -24,7 +28,7 @@ function ProductDetails(props) {
           <Row className="productName">
             <p>{props.name}</p>
           </Row>
-          <Row className="text-muted">
+          <Row className="text-muted text-truncate">
             <p>{"Product-code ©: " + props.id}</p>
           </Row>
         </Col>
@@ -32,18 +36,28 @@ function ProductDetails(props) {
           <Row className="align-items-center">
             <Col xs={4}>
               <button
-                onClick={() => decreaseProductQuantity(props.id)}
+                onClick={() => {
+                  if (props.id === 532 && getIdQuantity(props.id) == 3) {
+                    decreaseProductQuantity(641);
+                  }
+                  decreaseProductQuantity(props.id);
+                }}
                 className="redBgColor"
               >
                 -
               </button>
             </Col>
             <Col xs={4} className="text-center">
-              {props.quantity}
+              {getIdQuantity(props.id)}
             </Col>
             <Col xs={4} className="text-right">
               <button
-                onClick={() => increaseProductQuantity(props.id)}
+                onClick={() => {
+                  if (props.id === 532 && getIdQuantity(props.id) == 2) {
+                    increaseProductQuantity(641);
+                  }
+                  increaseProductQuantity(props.id);
+                }}
                 className="greenBgColor"
               >
                 +
@@ -54,14 +68,21 @@ function ProductDetails(props) {
         <Col className="d-flex">
           <Row className="align-items-center">
             <Col xs={6} className="text-muted text-center">
-              {priceCalculator(props.price, props.quantity)}
+              {"£" + priceCalculator(props.price, getIdQuantity(props.id))}
             </Col>
           </Row>
         </Col>
         <Col className="d-flex">
           <Row className="align-items-center">
             <Col xs={6} className="text-center">
-              <button className="close-button">X</button>
+              <button
+                onClick={() => {
+                  removeFromCart(props.id);
+                }}
+                className="close-button"
+              >
+                X
+              </button>
             </Col>
           </Row>
         </Col>
