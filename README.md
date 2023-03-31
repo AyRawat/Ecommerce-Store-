@@ -35,12 +35,12 @@ Open up your favorite browser and navigate to http://localhost:5173/ and you sho
 ## Challenges
 
 1. Implementing Search Functionality
-   Since, the API provided, did not have any route for searching a particular item. It was difficult to implement search functionality.
+   - Since, the API provided, did not have any route for searching a particular item. It was difficult to implement search functionality.
 
 Solution: I found a solution by saving the API data and performing a fuzzy search on the names of the items
 
 2. Managing State
-   Used React's Context API to manage the state of the cart. I stored the wishlisted and cart Items to show and perform various operations that were required.
+   - Used React's Context API to manage the state of the cart. I stored the wishlisted and cart Items to show and perform various operations that were required.
 
 ## Design Choices
 
