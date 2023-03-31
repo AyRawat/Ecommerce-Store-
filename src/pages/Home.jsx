@@ -20,11 +20,11 @@ export default function Home() {
   let key = "all";
 
   useEffect(() => {
-    async function fetchED() {
+    async function fetchAllData() {
       let response = await fetchData(key);
       setData(response);
     }
-    fetchED();
+    fetchAllData();
     //setData(response);
   }, []);
 

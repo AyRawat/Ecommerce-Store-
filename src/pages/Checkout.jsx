@@ -15,11 +15,11 @@ export default function Checkout() {
   const { cartItems, discountPriceCalculator } = useShoppingCart();
   let key = "all";
   useEffect(() => {
-    async function fetchED() {
+    async function fetchAllData() {
       let response = await fetchData(key);
       setData(response);
     }
-    fetchED();
+    fetchAllData();
   }, []);
 
   return (
