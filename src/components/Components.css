@@ -15,7 +15,7 @@ Box Shadow
 }
 .productCardShadow {
   width: 1121px;
-  height: 113px;
+  height: auto;
   background: #ffffff;
   box-shadow: 5px 5px 20px rgba(133, 133, 133, 0.2);
   border-radius: 30px;

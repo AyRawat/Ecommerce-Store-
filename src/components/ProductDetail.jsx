@@ -19,10 +19,10 @@ function ProductDetails(props) {
   return (
     <Container className="d-flex flex-column justify-content-between productCardShadow">
       <Row id={props.id}>
-        <Col className="col-lg-2">
+        <Col className="col-lg-2" xs={3}>
           <img className="productImage" src={props.img} />
         </Col>
-        <Col className="mt-3 col-lg-2">
+        <Col className="mt-3 col-lg-2" xs={3}>
           <Row className="productName">
             <p>{props.name}</p>
           </Row>
