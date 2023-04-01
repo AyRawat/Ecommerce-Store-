@@ -75,6 +75,7 @@ Groceries
   font-weight: 700;
   font-size: 24px;
   line-height: 27px;
+  margin-left: 10px;
 }
 
 .available-pill {
@@ -117,5 +118,24 @@ Groceries
     height: 422px;
     margin-right: 20px;
     margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 500px) {
+  .boxShadow {
+    width: 350px;
+    height: 422px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  .groceryHeading {
+    text-transform: uppercase;
+    /* font-family: "Almarai"; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-left: 10px;
   }
 }
